@@ -4,6 +4,7 @@ export const GlobalStyle = createGlobalStyle`
   * {
     padding: 0;
     margin: 0;
+    box-sizing: border-box;
   }
 
   html, body {
@@ -17,7 +18,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 `
 
-export const App = styled.div`
+export const StyledApp = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -25,7 +26,7 @@ export const App = styled.div`
   height: 100%;
   padding: 64px;
 
-  @media screen and (min-width: 768px) {
+  @media screen and (max-width: 768px) {
     padding: 16px;
     justify-content: center;
   }
