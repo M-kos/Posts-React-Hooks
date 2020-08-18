@@ -8,7 +8,7 @@ import {
 } from '../../styledComponents/styledComponents'
 
 export const Post = ({ title, body, user }) => {
-  const { name, username } = user
+  const { name = '', username = '' } = user
 
   return (
     <StyledPost>

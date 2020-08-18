@@ -5,12 +5,21 @@ import { Post } from '../Post/Post'
 
 export const PostList = ({ posts, users }) => {
   let postListMap
+  let usersList
 
   if (Array.isArray(posts) && Array.isArray(users)) {
-    postListMap = posts.map(({ id, userId, title, body }) => {
-      const [user] = users.filter(({ id }) => id === userId)
+    usersList = users.reduce((result, user) => {
+      if (!result[user.id]) {
+        result[user.id] = user
+      }
 
-      return <Post key={id} user={user} title={title} body={body} />
+      return result
+    }, {})
+
+    postListMap = posts.map(({ id, userId, title = '', body = '' }) => {
+      return (
+        <Post key={id} user={usersList[userId]} title={title} body={body} />
+      )
     })
   }
 
