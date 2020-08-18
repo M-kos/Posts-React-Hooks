@@ -43,3 +43,9 @@ export const PostTitle = styled.div``
 export const PostBody = styled.div``
 
 export const PostFooter = styled.div``
+
+export const StyledPagination = styled.div``
+
+export const PaginationList = styled.ul``
+
+export const PaginationElement = styled.li``
