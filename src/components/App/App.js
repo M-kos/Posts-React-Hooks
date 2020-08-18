@@ -1,19 +1,23 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import { useSetData } from '../../hooks/useSetData'
+import { usePagination } from '../../hooks/usePagination'
 import { StyledApp } from '../../styledComponents/styledComponents'
 import { PostList } from '../PostList/PostList'
+import { Pagination } from '../Pagination/Pagination'
 
 const App = () => {
-  const [currentPage, setPage] = useState(1)
-  const [postsPerPage, setPostsPerPage] = useState(10)
   const [state] = useSetData()
 
   const { posts, users, isLoading, isError } = state
 
+  const [paginationState, setPage] = usePagination(posts)
+
+  const { idxFirstPost, idxLastPost, totalPages } = paginationState
+
   let usersList
 
-  if (Array.isArray(users)) {
+  if (users && users.length) {
     usersList = users.reduce((result, user) => {
       if (!result[user.id]) {
         result[user.id] = user
@@ -23,13 +27,26 @@ const App = () => {
     }, {})
   }
 
+  let currentPosts
+
+  if (posts && posts.length) {
+    currentPosts = posts.slice(idxFirstPost, idxLastPost)
+  }
+
+  const switchPage = (numPage) => {
+    setPage(numPage)
+  }
+
   return (
     <StyledApp>
       {isError && <div>Something went wrong...</div>}
       {isLoading ? (
         <div>Loading...</div>
       ) : (
-        <PostList posts={posts} users={usersList} />
+        <>
+          <PostList posts={currentPosts} users={usersList} />
+          <Pagination totalPages={totalPages} switchPage={switchPage} />
+        </>
       )}
     </StyledApp>
   )
