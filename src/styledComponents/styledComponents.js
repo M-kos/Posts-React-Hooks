@@ -32,11 +32,11 @@ export const StyledApp = styled.div`
   }
 `
 
-export const Title = styled.div``
+export const StyledTitle = styled.div``
 
-export const PostList = styled.div``
+export const StyledPostList = styled.div``
 
-export const Post = styled.div``
+export const StyledPost = styled.div``
 
 export const PostTitle = styled.div``
 
