@@ -7,13 +7,10 @@ import { PostList } from '../PostList/PostList'
 import { Pagination } from '../Pagination/Pagination'
 
 const App = () => {
-  const [state] = useSetData()
-
-  const { posts, users, isLoading, isError } = state
-
-  const [paginationState, setPage] = usePagination(posts)
-
-  const { idxFirstPost, idxLastPost, totalPages } = paginationState
+  const [{ posts, users, isLoading, isError }] = useSetData()
+  const [{ idxFirstPost, idxLastPost, totalPages }, setPage] = usePagination(
+    posts
+  )
 
   let usersList
 
