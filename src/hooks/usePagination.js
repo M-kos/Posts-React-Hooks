@@ -2,8 +2,8 @@ import { useState, useEffect, useReducer } from 'react'
 
 import { paginationReducer } from '../reducers/paginationReducer'
 
-export const usePagination = (posts) => {
-  const [currentPage, setPage2] = useState(1)
+export const usePagination = (length) => {
+  const [currentPage, setPage] = useState(1)
   const [postsPerPage] = useState(10)
 
   const [paginationState, dispatch] = useReducer(paginationReducer, {
@@ -26,7 +26,7 @@ export const usePagination = (posts) => {
 
     const totalPages = []
 
-    for (let i = 1; i <= Math.ceil(posts.length / postsPerPage); i++) {
+    for (let i = 1; i <= Math.ceil(length / postsPerPage); i++) {
       totalPages.push(i)
     }
 
@@ -36,7 +36,7 @@ export const usePagination = (posts) => {
         totalPages,
       },
     })
-  }, [currentPage, postsPerPage, posts])
+  }, [currentPage, postsPerPage, length])
 
-  return [paginationState, setPage2]
+  return [paginationState, currentPage, setPage]
 }
