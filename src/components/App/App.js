@@ -51,7 +51,11 @@ const App = () => {
         <div>Loading...</div>
       ) : (
         <>
-          <StyledInput value={searchValue} onChange={searchHandler} />
+          <StyledInput
+            value={searchValue}
+            onChange={searchHandler}
+            placeholder="Search"
+          />
           <PostList posts={currentPosts} users={usersList} />
           <Pagination
             totalPages={totalPages}
