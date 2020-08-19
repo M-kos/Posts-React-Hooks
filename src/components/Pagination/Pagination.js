@@ -6,10 +6,14 @@ import {
   PaginationElement,
 } from '../../styledComponents/styledComponents'
 
-export const Pagination = ({ totalPages = [], switchPage }) => {
+export const Pagination = ({ totalPages = [], switchPage, currentPage }) => {
   const total = totalPages.map((numPage) => {
     return (
-      <PaginationElement key={numPage} onClick={() => switchPage(numPage)}>
+      <PaginationElement
+        key={numPage}
+        onClick={() => switchPage(numPage)}
+        active={currentPage === numPage}
+      >
         {numPage}
       </PaginationElement>
     )
