@@ -1,16 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { useSetData } from '../../hooks/useSetData'
 import { usePagination } from '../../hooks/usePagination'
-import { StyledApp } from '../../styledComponents/styledComponents'
+import { usePostsFilter } from '../../hooks/usePostsFilter'
+import { StyledApp, StyledInput } from '../../styledComponents/styledComponents'
 import { PostList } from '../PostList/PostList'
 import { Pagination } from '../Pagination/Pagination'
 
 const App = () => {
+  const [searchValue, setSearchValue] = useState('')
   const [{ posts, users, isLoading, isError }] = useSetData()
-  const [{ idxFirstPost, idxLastPost, totalPages }, setPage] = usePagination(
-    posts
-  )
+  const [filteredPosts] = usePostsFilter(posts, searchValue)
+  const [
+    { idxFirstPost, idxLastPost, totalPages },
+    currentPage,
+    setPage,
+  ] = usePagination(filteredPosts.length)
 
   let usersList
 
@@ -26,12 +31,17 @@ const App = () => {
 
   let currentPosts
 
-  if (posts && posts.length) {
-    currentPosts = posts.slice(idxFirstPost, idxLastPost)
+  if (filteredPosts && filteredPosts.length) {
+    currentPosts = filteredPosts.slice(idxFirstPost, idxLastPost)
   }
 
   const switchPage = (numPage) => {
     setPage(numPage)
+  }
+
+  const searchHandler = (event) => {
+    setSearchValue(event.target.value)
+    setPage(1)
   }
 
   return (
@@ -41,8 +51,13 @@ const App = () => {
         <div>Loading...</div>
       ) : (
         <>
+          <StyledInput value={searchValue} onChange={searchHandler} />
           <PostList posts={currentPosts} users={usersList} />
-          <Pagination totalPages={totalPages} switchPage={switchPage} />
+          <Pagination
+            totalPages={totalPages}
+            switchPage={switchPage}
+            currentPage={currentPage}
+          />
         </>
       )}
     </StyledApp>
