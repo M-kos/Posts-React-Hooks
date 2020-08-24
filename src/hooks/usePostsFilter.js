@@ -5,7 +5,11 @@ export const usePostsFilter = (posts, value) => {
 
   useEffect(() => {
     if (posts && posts.length) {
-      setFilteredPosts(posts.filter((post) => post.title.includes(value)))
+      setFilteredPosts(
+        posts.filter((post) =>
+          post.title.toLowerCase().includes(value.toLowerCase())
+        )
+      )
     }
   }, [posts, value])
 
